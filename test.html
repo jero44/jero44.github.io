@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<!--<link rel="stylesheet" href="flipclock.css">-->
+		<link rel="stylesheet" href="http://www.flipclockjs.com/_themes/flipclockjs/css/flipclock.css">
+		<!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> 
+		<!--<script src="jquery-1.12.0.min.js"></script>-->
+		<!--<script src="flipclock.js"></script>-->
+		<script src="http://www.fliclockjs.com/_themes/flipclockjs/js/flipclock/flipclock.js"></script>
+	</head>
+	<body>
+	<h1>Partie Entreprise</h1>
+	<div class="clock-1" style="margin:2em;"></div>
+	<h2> Partie Mémoire</h1>
+	<div class="clock-2" style="margin:2em;"></div>
+	<h2> Total </h1>
+	<div class="clock-3" style="margin:2em;"></div>
+	<button class="start">Début</button>
+	<button class="intermediaire">Intermediaire</button>
+	<button class="stop">Stop</button>
+	<button class="raz">RAZ</button>
+	<div class="message"></div>
+
+	<script type="text/javascript">
+		var clocks = [];
+
+		$(document).ready(function() {
+
+			clock1 = $('.clock-1').FlipClock({
+		        clockFace: 'MinuteCounter',
+		        autoStart: false,
+						language: 'fr'
+		    });
+			clock2 = $('.clock-2').FlipClock({
+			        clockFace: 'MinuteCounter',
+			        autoStart: false,
+							language: 'fr'
+			    });
+			clock3 = $('.clock-3').FlipClock({
+				        clockFace: 'MinuteCounter',
+				        autoStart: false,
+								language: 'fr'
+				    });
+			clocks.push(clock1);
+			clocks.push(clock2);
+			clocks.push(clock3);
+			// Démarrer les horloges
+			$('.start').click(function(e) {
+					clock1.start();
+					clock3.start();
+			});
+			$('.intermediaire').click(function(e) {
+					clock1.stop();
+					clock2.start();
+			});
+			$('.stop').click(function(e) {
+					clock1.stop();
+					clock2.stop();
+					clock3.stop();
+			});
+			$('.raz').click(function(e) {
+					clock1.reset();
+					clock2.reset();
+					clock3.reset();
+			});
+		});
+	</script>
+
+	</body>
+</html>
