@@ -37,13 +37,14 @@
 	<h2> Total </h1>
 	<div class="clock-3" style="margin:2em;"></div>
 	<button class="start button-large pure-button">Début</button>
-	<button class="intermediaire button-large pure-button">Intermediaire</button>
+	<!--<button class="intermediaire button-large pure-button">Intermediaire</button>-->
 	<button class="stop button-large pure-button">Stop</button>
 	<button class="raz button-large pure-button">RAZ</button>
 	<div class="message"></div>
 
 	<script type="text/javascript">
 		var clocks = [];
+		var etat=0;
 
 		$(document).ready(function() {
 
@@ -67,22 +68,35 @@
 			clocks.push(clock3);
 			// Démarrer les horloges
 			$('.start').click(function(e) {
+				if (etat==0){
 					clock1.start();
 					clock3.start();
+					etat=1;
+				}
 			});
-			$('.intermediaire').click(function(e) {
-					clock1.stop();
-					clock2.start();
-			});
+			//$('.intermediaire').click(function(e) {
+			//		clock1.stop();
+			//		clock2.start();
+			//});
 			$('.stop').click(function(e) {
-					clock1.stop();
+				if (etat==2){
 					clock2.stop();
 					clock3.stop();
+					etat=3;
+				}
+				if (etat==1){
+					clock1.stop();
+					clock2.start();
+					etat=2;
+				}
 			});
 			$('.raz').click(function(e) {
+				if (etat==3){
 					clock1.reset();
 					clock2.reset();
 					clock3.reset();
+					etat=0;
+				}
 			});
 		});
 	</script>
