@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+		<link rel="stylesheet" href="./stylesheets/flipclock.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="./javascripts/flipclock.js"></script>
+	</head>
+	<body>
+	<style scoped>
+        .button-xsmall {
+            font-size: 70%;
+        }
+
+        .button-small {
+            font-size: 85%;
+        }
+
+        .button-large {
+            font-size: 110%;
+        }
+
+        .button-xlarge {
+            font-size: 125%;
+        }
+
+    	</style>
+	<h1>	<div class="messageType"></div></h1>
+	<div class="clock-1" style="margin:2em;"></div>
+	<button class="start button-xlarge pure-button">Début</button>
+	<button class="stop button-xlarge pure-button">Stop</button>
+	<h2>Repetition
+		<div class="messageRepetition"></div>
+	</h2>
+	<script type="text/javascript">
+		var tempsExercice=15;
+		var tempsRepos=20;
+		var nbRepetition=3;
+		var repetition=0;
+		var phase=0;	//0=exercice, 1=repos
+
+		$(document).ready(function() {
+			$('.messageType').html('Exercice');
+			clock1 = $('.clock-1').FlipClock(tempsExercice,{
+		        clockFace: 'MinuteCounter',
+		        autoStart: false,
+						countdown: true,
+						language: 'fr',
+						callbacks: {
+		        	start: function() {
+		        		$('.messageRepetition').html(repetition);
+								if (phase==0){
+									$('.messageType').html('Exercice');
+								}else{
+									$('.messageType').html('Repos');
+								}
+		        	},
+							stop: function(){
+								if (repetition>0){
+									if (phase==0){
+										clock1.setTime(tempsRepos);
+										phase=1
+									}else{
+										repetition=repetition+1;
+										clock1.setTime(tempsExercice);
+										phase=0;
+									}
+									if (repetition>0 && repetition<=nbRepetition){
+										clock1.start();
+									}
+								}
+							}
+		        }
+		    });
+
+			// Démarrer les horloges
+			$('.start').click(function(e) {
+					if (repetition==0){
+						repetition=1;
+						phase=0;
+						clock1.start();
+					}
+			});
+			$('.stop').click(function(e) {
+						repetition=0;
+						clock1.stop();
+
+			});
+
+		});
+	</script>
+
+	</body>
+</html>
